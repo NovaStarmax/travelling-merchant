@@ -8,15 +8,21 @@ if __name__ == "__main__":
     average_distances = []
     best_bees_generation = []
 
-    for _ in range(NB_GEN):
+    for gen in range(NB_GEN):
         tsp.cross_tsp_solvers()
         tsp.mutate_tsp_solvers()
-        average_distances.append(tsp.average_tsp_solvers())
+        current_avg = tsp.average_tsp_solvers()
+        average_distances.append(current_avg)
 
-        get_best_tsp = min(
-            tsp.tsp_solver, key=lambda tsp: tsp.get_distance()
-        )  # min permet prendre l'objet avec la valeur la plus faible
+        get_best_tsp = min(tsp.tsp_solver, key=lambda tsp: tsp.get_distance())
         best_bees_generation.append(get_best_tsp)
+        
+        # Debug prints
+        if gen % 100 == 0:  # Afficher tous les 100 générations
+            print(f"Generation {gen}:")
+            print(f"Average distance: {current_avg:.2f}")
+            print(f"Best distance: {get_best_tsp.get_distance():.2f}")
+            print("-" * 50)
 
     master_tsp = min(
         best_bees_generation, key=lambda tsp: tsp.get_distance()

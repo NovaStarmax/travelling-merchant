@@ -10,9 +10,9 @@ def get_cities(path):
 
 PATH = 'data/villes_france_lat_long.csv'
 CITIES = get_cities(PATH)
-SELECTION_RATE = 0.1  # Meilleur à 0,1   # 1er impact sur le résultat
-MUTATION_RATE = 0.1  # Meilleur à 0,1
-MUTATION_FREQUENCY = 0.02  # Meilleur à 0,02
-NB_TSP_SOLVER = 100
-NB_GEN = 1000  # Très bien à partir de 1000
+SELECTION_RATE = 0.3      # Augmenter pour plus de diversité
+MUTATION_RATE = 0.3       # Augmenter pour plus d'exploration
+MUTATION_FREQUENCY = 0.1   # Augmenter la fréquence des mutations
+NB_TSP_SOLVER = 200       # Plus grande population
+NB_GEN = 2000  # Très bien à partir de 1000
 CROSS_PART = 0.5

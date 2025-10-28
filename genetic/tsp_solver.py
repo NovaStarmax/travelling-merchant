@@ -34,15 +34,36 @@ class TSPSolver:
         return self.distance
 
     def mutate(self):  # changement
-        nb_path_mutate = int(len(self.path) * MUTATION_FREQUENCY)
-        for _ in range(nb_path_mutate):
-            a, b = random.sample(range(len(self.path)), 2)
-            self.path[a], self.path[b] = self.path[b], self.path[a]
+        # Augmenter la diversité avec différents types de mutations
+        if random.random() < 0.5:
+            # Swap mutation
+            nb_path_mutate = max(1, int(len(self.path) * MUTATION_FREQUENCY))
+            for _ in range(nb_path_mutate):
+                a, b = random.sample(range(len(self.path)), 2)
+                self.path[a], self.path[b] = self.path[b], self.path[a]
+        else:
+            # Reverse mutation - inverse une sous-séquence
+            start = random.randint(0, len(self.path) - 2)
+            end = random.randint(start + 1, len(self.path) - 1)
+            self.path[start:end] = reversed(self.path[start:end])
+        
         self.compute_path()
 
     def cross(self, tsp_2):
-        segment_size = int(len(self.path) * CROSS_PART)
-        child_path = self.path[:segment_size].copy()  # Ajouter .copy()
-        remaining_cities = [city for city in tsp_2.path if city not in child_path]
-        child_path.extend(remaining_cities)
+        # Ordered Crossover (OX)
+        size = len(self.path)
+        start, end = sorted(random.sample(range(size), 2))
+        
+        # Prendre une section du premier parent
+        child_path = [None] * size
+        child_path[start:end] = self.path[start:end]
+        
+        # Remplir le reste avec les villes du deuxième parent dans l'ordre
+        remaining = [city for city in tsp_2.path if city not in child_path[start:end]]
+        j = 0
+        for i in range(size):
+            if child_path[i] is None:
+                child_path[i] = remaining[j]
+                j += 1
+                
         return TSPSolver(CITIES, path=child_path)
