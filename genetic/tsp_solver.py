@@ -1,7 +1,7 @@
 import math
 import random
 
-from config import CROSS_PART, MUTATION_FREQUENCY, CITIES, MARSEILLE
+from genetic.config import CROSS_PART, MUTATION_FREQUENCY, CITIES, MARSEILLE
 
 class TSPSolver:
     def __init__(self, cities, path=None):  # Changer path=[] en path=None
@@ -17,10 +17,24 @@ class TSPSolver:
     def create_path(self, cities):
         self.path = random.sample(cities, len(cities))
 
-    def compute_segment(self, pointA, pointD): # Changer la formule (vol d’oiseau)
-        dx = pointA[0] - pointD[0]
-        dy = pointA[1] - pointD[1]
-        return math.sqrt(dx**2 + dy**2)
+    def compute_segment(self, pointA, pointD):
+        # Rayon de la Terre en kilomètres
+        R = 6371.0
+        
+        # Conversion des degrés en radians
+        lat1, lon1 = math.radians(pointA[0]), math.radians(pointA[1])
+        lat2, lon2 = math.radians(pointD[0]), math.radians(pointD[1])
+        
+        # Différences de coordonnées
+        dlat = lat2 - lat1
+        dlon = lon2 - lon1
+        
+        # Formule de Haversine
+        a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
+        c = 2 * math.asin(math.sqrt(a))
+        
+        # Distance en kilomètres
+        return R * c
 
     def compute_path(self):
         self.distance = self.compute_segment(MARSEILLE, self.path[0])

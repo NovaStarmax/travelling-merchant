@@ -1,8 +1,8 @@
-from traveling_salesman_problem import TravelingSalesmanProblem
-from config import NB_GEN, CITIES, MARSEILLE
+from genetic.traveling_salesman_problem import TravelingSalesmanProblem
+from genetic.config import NB_GEN, CITIES, MARSEILLE
 import matplotlib.pyplot as plt
 
-if __name__ == "__main__":
+def run_tsp_genetic_algorithm():
     tsp = TravelingSalesmanProblem(CITIES)
 
     average_distances = []
@@ -54,3 +54,5 @@ if __name__ == "__main__":
     plt.legend()
 
     plt.show()
+
+run_tsp_genetic_algorithm()

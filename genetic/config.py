@@ -8,7 +8,7 @@ def get_cities(path):
     return position_cities
 
 
-PATH = 'data/villes_france_lat_long.csv'
+PATH = './data/villes_france_lat_long.csv'
 CITIES = get_cities(PATH)
 SELECTION_RATE = 0.3      # Augmenter pour plus de diversité
 MUTATION_RATE = 0.3       # Augmenter pour plus d'exploration

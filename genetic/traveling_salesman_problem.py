@@ -1,6 +1,6 @@
 import random
-from tsp_solver import TSPSolver
-from config import NB_TSP_SOLVER, SELECTION_RATE, MUTATION_RATE
+from genetic.tsp_solver import TSPSolver
+from genetic.config import NB_TSP_SOLVER, SELECTION_RATE, MUTATION_RATE
 
 class TravelingSalesmanProblem:
     def __init__(self, tsp_solver):
