@@ -1,0 +1,49 @@
+import random
+from tsp_solver import TSPSolver
+from config import NB_TSP_SOLVER, SELECTION_RATE, MUTATION_RATE
+
+class TravelingSalesmanProblem:
+    def __init__(self, tsp_solver):
+        self.tsp_solver = tsp_solver
+        self.create_tsp_solver(tsp_solver)
+
+    def create_tsp_solver(self, tsp_solver):
+        self.tsp_solver = []
+        for _ in range(NB_TSP_SOLVER):
+            b = TSPSolver(tsp_solver)
+            self.tsp_solver.append(b)
+
+    def sort_tsp_solvers(self):
+        return self.tsp_solver.sort(key=lambda tsp: tsp.get_distance())
+
+    def select_tsp_solvers(self):
+        nb_selected = int(len(self.tsp_solver) * SELECTION_RATE)
+        self.sort_tsp_solvers()
+        selected_tsp_solvers = self.tsp_solver[:nb_selected]
+        return selected_tsp_solvers
+
+    def cross_tsp_solvers(self):
+        selected_tsp_solvers = self.select_tsp_solvers()
+        new_population = []
+
+        while len(new_population) < NB_TSP_SOLVER:
+            tsp_1 = random.choice(selected_tsp_solvers)
+            tsp_2 = random.choice(selected_tsp_solvers)
+            while tsp_1 == tsp_2:
+                tsp_2 = random.choice(selected_tsp_solvers)
+            child = tsp_1.cross(tsp_2)
+            new_population.append(child)
+
+        self.tsp_solver = new_population
+
+    def mutate_tsp_solvers(self):
+        nb_tsp_solvers_to_mutate = int(NB_TSP_SOLVER * MUTATION_RATE)
+        tsp_solvers_to_mutate = random.sample(self.tsp_solver, nb_tsp_solvers_to_mutate)
+        for tsp in tsp_solvers_to_mutate:
+            tsp.mutate()
+
+    def average_tsp_solvers(self):
+        total = sum(tsp.get_distance() for tsp in self.tsp_solver)
+        average = total / NB_TSP_SOLVER
+        return average
+    
