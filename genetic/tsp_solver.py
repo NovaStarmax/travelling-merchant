@@ -4,11 +4,11 @@ import random
 from config import CROSS_PART, MUTATION_FREQUENCY, CITIES, MARSEILLE
 
 class TSPSolver:
-    def __init__(self, cities, path=[]):
-        if len(path) == 0:
+    def __init__(self, cities, path=None):  # Changer path=[] en path=None
+        if path is None:  # Changer len(path) == 0 en path is None
             self.create_path(cities)
         else:
-            self.path = path
+            self.path = path.copy()  # Ajouter .copy() pour éviter les références partagées
         self.compute_path()
 
     def __str__(self):
@@ -42,9 +42,7 @@ class TSPSolver:
 
     def cross(self, tsp_2):
         segment_size = int(len(self.path) * CROSS_PART)
-        child_path = self.path[:segment_size]
-        for f in tsp_2.path:
-            if f not in child_path:
-                child_path.append(f)
+        child_path = self.path[:segment_size].copy()  # Ajouter .copy()
+        remaining_cities = [city for city in tsp_2.path if city not in child_path]
+        child_path.extend(remaining_cities)
         return TSPSolver(CITIES, path=child_path)
-    

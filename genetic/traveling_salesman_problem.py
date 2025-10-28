@@ -14,11 +14,10 @@ class TravelingSalesmanProblem:
             self.tsp_solver.append(b)
 
     def sort_tsp_solvers(self):
-        return self.tsp_solver.sort(key=lambda tsp: tsp.get_distance())
+        self.tsp_solver.sort(key=lambda tsp: tsp.get_distance())
 
     def select_tsp_solvers(self):
         nb_selected = int(len(self.tsp_solver) * SELECTION_RATE)
-        self.sort_tsp_solvers()
         selected_tsp_solvers = self.tsp_solver[:nb_selected]
         return selected_tsp_solvers
 
@@ -46,4 +45,3 @@ class TravelingSalesmanProblem:
         total = sum(tsp.get_distance() for tsp in self.tsp_solver)
         average = total / NB_TSP_SOLVER
         return average
-    
