@@ -55,4 +55,4 @@ def run_tsp_genetic_algorithm():
 
     plt.show()
 
-run_tsp_genetic_algorithm()
+# run_tsp_genetic_algorithm()

@@ -1,6 +1,6 @@
 import networkx as nx
 import matplotlib.pyplot as plt
-import data_processor as dp
+import christofides.data_processor as dp
 from typing import List, Tuple
 
 class ChristofidesVisualizer:

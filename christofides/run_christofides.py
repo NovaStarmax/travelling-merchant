@@ -1,9 +1,9 @@
-import data_processor as dp
-from tsp_solver import ChristofidesVisualizer
+import christofides.data_processor as dp
+from christofides.tsp_solver import ChristofidesVisualizer
 
 CITIES_FILE = 'data/villes_france_lat_long.csv'
 
-def main():
+def run_christofides():
   
     print("Chargement des données et calcul de la matrice de distances...")
     
@@ -31,7 +31,3 @@ def main():
     print(f"**Distance Totale (Approximation):** {distance:.2f} km")
     print("Le chemin est affiché dans le terminal et a été visualisé étape par étape.")
     print("="*50)
-
-
-if __name__ == '__main__':
-    main()
